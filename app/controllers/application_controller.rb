@@ -19,15 +19,17 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    User.find_by_session_token(session[:session_token])
+    return nil if session[:session_token].nil?
+    @current_user ||= User.find_by_session_token(session[:session_token])
   end
 
   def login!(user)
-    session[:session_token] = user.reset_session_token!
+    @current_user = user
+    session[:session_token] = user.session_token
   end
 
   def logout!
-    current_user.reset_session_token!
+    current_user.try(:reset_session_token!)
     session[:session_token] = nil
   end
 
@@ -40,8 +42,8 @@ class ApplicationController < ActionController::Base
   def user_params
     params.require(:user).permit(:username, :name, :password, :email)
   end
-  
-  def redirect_to_login
+
+  def require_current_user!
     unless logged_in?
       redirect_to new_session_url
     end

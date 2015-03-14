@@ -26,3 +26,8 @@
   <% end %>
   <input type="submit" value=<%= "#{verb} user" %>>
 </form>
+<% if @user.persisted? %>
+  <%= button_to @user.name, user_url(@user), method: :get %>
+<% else %>
+  <%= button_to "Log In Page", new_session_url, method: :get %>
+<% end %>

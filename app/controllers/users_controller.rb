@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :redirect_to_login, except: [:create, :new]
+  before_action :require_current_user!, except: [:create, :new]
 
   def index
     render :index
@@ -39,8 +39,14 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
-    render :index
+    if @user.id = current_user.id
+      logout!
+      @user.destroy
+      redirect_to new_session_url
+    else
+      @user.destroy
+      render :index
+    end
   end
 
   def show
