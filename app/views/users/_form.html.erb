@@ -1,0 +1,28 @@
+<% if @user.persisted? %>
+  <% verb = "Edit" %>
+  <% url = user_url(@user) %>
+<% else %>
+  <% verb = "Create" %>
+  <% url = users_url %>
+<% end %>
+<form action="<%= url %>" method="POST">
+  <%= csrf_input %>
+  <% if @user.persisted? %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+  <label for="username_field">Username:</label>
+  <input type="text" id="username_field" name="user[username]" value=<%= @user.username %>>
+  <br>
+  <label for="email_field">Email:</label>
+  <input type="text" id="email_field" name="user[email]" value=<%= @user.email %>>
+  <br>
+  <label for="name_field">Name:</label>
+  <input type="text" id="name_field" name="user[name]" value=<%= @user.name %>>
+  <br>
+  <% unless @user.persisted? %>
+    <label for="password_field">Password:</label>
+    <input type="password" id="password_field" name="user[password]">
+    <br>
+  <% end %>
+  <input type="submit" value=<%= "#{verb} user" %>>
+</form>

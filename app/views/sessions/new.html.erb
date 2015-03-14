@@ -1,0 +1,11 @@
+<%= button_to "Sign up", new_user_url, method: :get %>
+<form action="<%= session_url %>" method="POST">
+  <%= csrf_input %>
+  <label for="email_field">Email: </label>
+  <input type="text" id="email_field" name="user[email]" value="<%= @user.email %>">
+  <br>
+  <label for="password_field">Password: </label>
+  <input type="text" id="password_field" name="user[password]">
+  <br>
+  <input type="submit" value="Log in">
+</form>
