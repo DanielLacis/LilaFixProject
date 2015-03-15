@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
   attr_reader :password
 
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :children
+
   def self.generate_session_token
     begin
       token = SecureRandom.urlsafe_base64

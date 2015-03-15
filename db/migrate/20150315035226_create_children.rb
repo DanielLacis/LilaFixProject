@@ -4,6 +4,7 @@ class CreateChildren < ActiveRecord::Migration
       t.string :name, null: false
       t.string :description, null: false
       t.string :picture, null: false
+      t.integer :user_id, null: false
 
       t.timestamps
     end
