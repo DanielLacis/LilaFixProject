@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    if @user.id = current_user.id
+    if @user.id == current_user.id
       logout!
       @user.destroy
       redirect_to new_session_url

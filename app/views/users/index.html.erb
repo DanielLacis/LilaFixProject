@@ -3,6 +3,9 @@
   <% User.all.each do |user| %>
     <li>
       <%= link_to user.username, user_url(user) %>
+      <% if current_user.admin %>
+        <%= button_to "Delete", user_url(user), method: :delete %>
+      <% end %>
     </li>
   <% end %>
 </ol>
