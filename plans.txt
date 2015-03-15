@@ -3,3 +3,21 @@ comments have id, content, user_id, post_id
 children have id, description, picture (string)
 
 people can add posts to any child, add comments to any post
+
+
+Once logged in, will go to page displaying all the children
+click on a child to show it
+  here N posts are displayed, can click previous or something to view older posts
+  this will have a button to click to add a post
+    this button will take you to a form to create a new post
+  each post will also display a few comments
+    can click the post to go to its show page
+      the show page displays all the comments
+      also has a button to download the large image file
+      on its show page, there is form at the bottom of the comments to add a new comment
+
+dunno how to order children
+posts and comments are based on created at
+links to get back to children index, current child, log out
+
+need a way to reset passwords
