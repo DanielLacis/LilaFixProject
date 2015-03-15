@@ -1,0 +1,5 @@
+posts have id, content, user_id, timestamps, child_id, picture (string)
+comments have id, content, user_id, post_id
+children have id, description, picture (string)
+
+people can add posts to any child, add comments to any post
