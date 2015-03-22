@@ -11,7 +11,7 @@
 <% if logged_in? %>
   <%= button_to "Log out", session_url, method: :delete %>
 <% end %>
-<%= button_to "The Children", children_url, method: :get %>
+<%= link_to "The Children", children_url, method: :get %>
 <%= yield %>
 
 </body>

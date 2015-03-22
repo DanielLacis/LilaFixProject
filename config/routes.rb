@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   root to: 'sessions#new'
   resources :users
   resource :session, only: [:new, :create, :destroy]
-  resources :posts, except: :index
+  resources :children, only: [] do
+    resources :posts, only: [:new, :edit, :index]
+  end
+  resources :posts, except: [:new, :edit, :index]
   resources :comments, except: [:index, :show]
   resources :children
 end

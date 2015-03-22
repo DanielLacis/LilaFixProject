@@ -1,0 +1,12 @@
+<%= link_to "Lila's Profile", child_url(@child), method: :get %>
+<h1><%= @child.name %></h1>
+<p><%= button_to "Add Post", new_child_post_url(@child), method: :get %></p>
+<%= will_paginate @posts %>
+<% @posts.each do |post| %>
+  <h3>Picture: <%= post.picture %></h3>
+  <h3>Content: <%= post.content %></h3>
+  <% if current_user.id == post.user_id %>
+    <p><%= link_to "Edit Post", edit_child_post_url(@child.id, post.id) %></p>
+  <% end %>
+<% end %>
+<%= will_paginate @posts %>

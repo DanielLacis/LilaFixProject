@@ -1,9 +1,11 @@
 <% if @user.persisted? %>
-  <% verb = "Edit" %>
+  <% verb = "Update" %>
   <% url = user_url(@user) %>
+  <% button_val = "Update #{@user.name}" %>
 <% else %>
   <% verb = "Create" %>
   <% url = users_url %>
+  <% button_val = "Create account" %>
 <% end %>
 <form action="<%= url %>" method="POST">
   <%= csrf_input %>
@@ -23,11 +25,14 @@
     <label for="password_field">Password:</label>
     <input type="password" id="password_field" name="user[password]">
     <br>
+    <label for="password2_field">Confirm Password:</label>
+    <input type="password" id ="password2_field" name="user[password2]">
+    <br>
   <% end %>
-  <input type="submit" value=<%= "#{verb} user" %>>
+  <input type="submit" value="<%= button_val %>">
 </form>
 <% if @user.persisted? %>
-  <%= button_to @user.name, user_url(@user), method: :get %>
+  <%= link_to @user.name, user_url(@user), method: :get %>
 <% else %>
-  <%= button_to "Log In Page", new_session_url, method: :get %>
+  <%= link_to "Log In Page", new_session_url, method: :get %>
 <% end %>

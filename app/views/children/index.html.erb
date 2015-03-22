@@ -1,6 +1,6 @@
 <h1>All Children: </h1>
 <ul>
   <% Child.all.each do |child| %>
-    <li><%= link_to child.name, child_url(child), method: :get %></li>
+    <li><%= link_to child.name, child_posts_url(child), method: :get %></li>
   <% end %>
 </ul>

@@ -1,3 +1,4 @@
 <h1><%= @child.name %></h1>
 <h3><%= @child.picture %></h3>
 <p><%= @child.description %></p>
+<p><%= link_to "#{@child.name} posts", child_posts_url(@child), method: :get %></p>

@@ -17,8 +17,11 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :email, presence: true, uniqueness: true
   validates :name, presence: true
   validates :password, length: { minimum: 6, allow_nil: true}
+  validates :password2, length: { minimum: 6, allow_nil: true}
+  validate :check_password
+
   after_initialize :ensure_session_token
-  attr_reader :password
+  attr_reader :password, :password2
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -44,6 +47,10 @@ class User < ActiveRecord::Base
     self.password_digest = BCrypt::Password.create(password)
   end
 
+  def password2=(password2)
+    @password2 = password2
+  end
+
   def is_password?(password)
     BCrypt::Password.new(self.password_digest).is_password?(password)
   end
@@ -57,5 +64,11 @@ class User < ActiveRecord::Base
   private
   def ensure_session_token
     self.session_token ||= self.class.generate_session_token
+  end
+
+  def check_password
+    unless @password == @password2
+      errors.add(:check_password, "passwords did not match")
+    end
   end
 end

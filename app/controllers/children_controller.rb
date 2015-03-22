@@ -1,4 +1,6 @@
 class ChildrenController < ApplicationController
+  before_action :require_current_user!
+
   def new
     @child = Child.new
     render :new

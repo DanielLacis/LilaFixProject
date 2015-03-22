@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   private
   def user_params
-    params.require(:user).permit(:username, :name, :password, :email)
+    params.require(:user).permit(:username, :name, :password, :password2, :email)
   end
 
   def require_current_user!
