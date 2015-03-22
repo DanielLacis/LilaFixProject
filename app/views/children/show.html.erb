@@ -1,4 +1,8 @@
 <h1><%= @child.name %></h1>
-<h3><%= @child.picture %></h3>
+<h3><%= image_tag @child.picture.url %></h3>
 <p><%= @child.description %></p>
+<% if @child.user_id == current_user.id %>
+  <p><%= link_to "Edit #{@child.name}", edit_child_url(@child), method: :get %></p>
+<% end %>
+
 <p><%= link_to "#{@child.name} posts", child_posts_url(@child), method: :get %></p>

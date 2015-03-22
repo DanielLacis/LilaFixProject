@@ -1,28 +1,37 @@
 <% if @post.persisted? %>
   <% action_url = post_url(@post) %>
   <% button_text = "Edit Post" %>
-  <% user_id = @post.child.id %>
+  <% user_id = @post.user_id %>
+  <% method = "patch" %>
 <% else %>
   <% action_url = posts_url %>
   <% button_text = "Create Post" %>
   <% user_id = current_user.id %>
+  <% @post.child_id ||= params[:child_id] %>
+  <% method = "post" %>
 <% end %>
 <h1> <%= button_text %></h1>
-<form action="<%= action_url %>" method="post">
-  <%= csrf_input %>
-  <% if @post.persisted? %>
-    <input type="hidden" name="_method" value="patch">
-  <% end %>
-    <label for="picture_field">Picture: </label>
-    <input type="text" id="picture_field" name="post[picture]" value="<%= @post.picture %>">
-    <label for="content_field">Description: </label>
-    <textarea name="post[content]" rows="8" cols="40"><%= @post.content %></textarea>
-    <input type="hidden" name="post[user_id]" value="<%= user_id %>">
-    <input type="hidden" name="post[child_id]" value="<%= params[:child_id] %>">
-    <input type="submit" value="<%= button_text %>">
-</form>
-<% if current_user.id == @post.user_id && @post.persisted? %>
-  <%= button_to "Delete Post", post_url(@post), method: :delete %>
+
+<%= form_for :post, :html => {:multipart => true}, :url => action_url, :method => method do |f| %>
+  <%= f.hidden_field :child_id, value: @post.child_id %>
+  <%= f.hidden_field :user_id, value: user_id %>
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_area(:content, cols: 40, rows:10) %>
+  </p>
+  <p>
+    <% if @post.persisted? %>
+      <%= f.hidden_field :picture, value: @post.picture %>
+    <% else %>
+      <%= f.file_field :picture %>
+    <% end %>
+  </p>
+  <p><%= f.submit %></p>
 <% end %>
-<% child = Child.find_by_id(params[:child_id]) %>
+
+<% if current_user.id == @post.user_id && @post.persisted? %>
+  <p><%= link_to "Delete Post", post_url(@post), method: :delete %></p>
+<% end %>
+
+<% child = @post.child %>
 <%= link_to "Return to #{child.name}'s posts", child_posts_url(child), method: :get %>

@@ -2,26 +2,32 @@
   <h1>Edit <%= @child.name %></h1>
   <% submit_value = "Submit Changes" %>
   <% user_id_value = @child.user_id %>
-  <% url = edit_child_url(@child.id) %>
+  <% url = child_url(@child.id) %>
+  <% method = "patch" %>
 <% else %>
   <h1> Create a child!</h1>
   <% submit_value = "Submit Child" %>
   <% user_id_value = current_user.id %>
   <% url = children_url %>
+  <% method = "post" %>
 <% end %>
 
-
-<form action="<%= url %> " method="POST">
-  <%= csrf_input %>
-  <label for="child_name">Name: </label>
-  <input type="text" id="child_name" name="child[name]" value="<%= @child.name %>">
-  <br>
-  <label for="child_description">Description: </label>
-  <textarea name="child[description]" id="child_description" rows="8" cols="40"><%= @child.description %></textarea>
-  <br>
-  <label for="picture_field">Picture: </label>
-  <input type="text" id="picture_field" name="child[picture]" value="<%= @child.picture %>">
-  <br>
-  <input type="hidden" name="child[user_id]" value="<%= user_id_value %>">
-  <input type="submit" value="<%= submit_value %>">
-</form>
+<%= form_for :child, :html => {:multipart => true}, :url => url, method: method do |f| %>
+  <%= f.hidden_field :user_id, value: user_id_value %>
+  <p>
+    <%= f.label :name %> <br />
+    <%= f.text_field :name %> <br />
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area(:description, cols: 40, rows: 10) %>
+  </p>
+  <p>
+    <% if @child.persisted? %>
+      <%= f.hidden_field :picture, value: @child.picture %>
+    <% else %>
+      <%= f.file_field :picture %>
+    <% end %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

@@ -13,7 +13,7 @@ class PostsController < ApplicationController
       redirect_to child_posts_url(@post.child)
     else
       flash.now[:errors] = @post.errors.full_messages
-      render new
+      render :new
     end
   end
 

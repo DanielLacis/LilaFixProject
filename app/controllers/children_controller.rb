@@ -27,7 +27,7 @@ class ChildrenController < ApplicationController
       redirect_to child_url(params[:id])
     else
       flash.now[:errors] = @child.errors.full_messages
-      @child = Child.new(child_params.merge(id: params[:id]))
+      @child.update(child_params)
       render :edit
     end
   end
@@ -42,7 +42,7 @@ class ChildrenController < ApplicationController
   end
 
   def destroy
-    @child.find(params[:id])
+    @child= Child.find(params[:id])
     @child.destroy
     redirect_to children_url
   end

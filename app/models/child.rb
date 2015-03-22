@@ -14,5 +14,6 @@
 class Child < ActiveRecord::Base
   validates :name, :description, :picture, :user_id, presence: true
   has_many :posts, dependent: :destroy
+  mount_uploader :picture, PictureUploader
   belongs_to :user
 end

@@ -2,5 +2,9 @@
 <ul>
   <% Child.all.each do |child| %>
     <li><%= link_to child.name, child_posts_url(child), method: :get %></li>
+    <% if current_user.admin %>
+      <li><%= button_to "Delete Child", child_url(child), method: :delete %></li>
+    <% end %>
   <% end %>
 </ul>
+<p><%= button_to "New Child", new_child_url, method: :get %></p>

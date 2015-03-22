@@ -13,7 +13,17 @@
 
 class Post < ActiveRecord::Base
   validates :content, :user_id, :child_id, :picture, presence: true
+  validate :picture_size
   belongs_to :user
+  mount_uploader :picture, ::PictureUploader
   belongs_to :child
   has_many :comments, dependent: :destroy
+
+  private
+
+  def picture_size
+    if picture.size > 5.megabytes
+      errors.add(:picture_size, "should be less than 5MB")
+    end
+  end
 end
