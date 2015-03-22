@@ -13,7 +13,16 @@
 
 class Child < ActiveRecord::Base
   validates :name, :description, :picture, :user_id, presence: true
+  validate :picture, :picture_size
   has_many :posts, dependent: :destroy
   mount_uploader :picture, PictureUploader
   belongs_to :user
+
+  private
+
+  def picture_size
+    if picture.size > 5.megabytes
+      errors.add(:picture_size, "should be less than 5MB")
+    end
+  end
 end
