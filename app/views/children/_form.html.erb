@@ -31,3 +31,6 @@
   </p>
   <p><%= f.submit %></p>
 <% end %>
+<% if @child.persisted? %>
+  <p><%= link_to "Return to #{@child.name}", child_url(@child), method: :get %></p>
+<% end %>

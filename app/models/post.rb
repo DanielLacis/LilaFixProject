@@ -15,7 +15,7 @@ class Post < ActiveRecord::Base
   validates :content, :user_id, :child_id, :picture, presence: true
   validate :picture_size
   belongs_to :user
-  mount_uploader :picture, ::PictureUploader
+  mount_uploader :picture, PictureUploader
   belongs_to :child
   has_many :comments, dependent: :destroy
 
